@@ -1,7 +1,7 @@
 var cell = function(i, j) {
     this.i = i;
     this.j = j;
-    
+
     this.visited = false;
 
     let x = i*w;
@@ -23,4 +23,33 @@ var cell = function(i, j) {
             line(x,y,x,y+w);
         }
     }
+
+    this.checkNeighbors = function() {
+        var neighbors = [];
+
+        var top    = cells[index(this.i, this.j -1)];
+        var right  = cells[index(this.i+1, this.j)];
+        var bottom = cells[index(this.i, this.j+1)];
+        var left   = cells[index(this.i-1, this.j)];
+
+        if (top && !top.visited) {
+            neighbors.push(top);
+        }
+        if (right && !right.visited) {
+            neighbors.push(right);
+        }
+        if (bottom && !bottom.visited) {
+            neighbors.push(bottom);
+        }
+        if (left && !left.visited) {
+            neighbors.push(left);
+        }
+
+        if (neighbors.length > 0) {
+            var r = floor(random(0, neighbors.length));
+            return neighbors[r];
+        } else {
+            return undefined;
+        }
+        }
 }
