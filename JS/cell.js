@@ -32,9 +32,9 @@ var cell = function(i, j) {
         }
     }
 
-    this.highlight = function() {
+    this.highlight = function(a) {
         noStroke();
-        fill(255,0,255,100);
+        fill(255,0,a,100);
         rect(i*w,j*w,w,w);
     }
 

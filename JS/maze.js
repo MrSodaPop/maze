@@ -1,4 +1,4 @@
-var w = 20;
+var w = 30;
 var cols, rows, current;
 var cells = [];
 var stack = [];
@@ -7,6 +7,9 @@ var g = false;
 $(document).ready(function() {
     $('html').keypress(function(key){
         if (!g) {
+            return;
+        }
+        if (index(current.i,current.j) === rows*cols - 1) {
             return;
         }
         switch (key.key) {
@@ -44,7 +47,6 @@ var setup = function() {
 }
 
 var move = function(dir) {
-    console.log(current);
     if (current.walls[dir]) {
         return;
     }
@@ -97,7 +99,7 @@ var draw = function() {
         
 
         current.visited = true;
-        current.highlight();
+        current.highlight(255);
 
         var next = current.checkNeighbors();
 
@@ -122,7 +124,12 @@ var draw = function() {
         for (let i = 0; i < cells.length; i++) {
             cells[i].show();
         }
-        current.highlight();
+        if (index(current.i,current.j) === rows*cols - 1) {
+            current.highlight(0);
+        }
+        else {
+            current.highlight(255);
+        }
     }
 }
 
