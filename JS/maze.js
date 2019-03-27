@@ -1,7 +1,30 @@
-var w = 15;
+var w = 20;
 var cols, rows, current;
 var cells = [];
 var stack = [];
+var g = false;
+
+$(document).ready(function() {
+    $('html').keypress(function(key){
+        if (!g) {
+            return;
+        }
+        switch (key.key) {
+            case 'w':
+                move(0);
+            break;
+            case 'd':
+                move(1);
+            break;
+            case 's':
+                move(2);
+            break;
+            case 'a':
+                move(3);
+            break;
+        }
+    })
+})
 
 var setup = function() {
     createCanvas(600,600);
@@ -20,33 +43,86 @@ var setup = function() {
     cells[cells.length-1].walls[1] = false;
 }
 
-var draw = function() {
-    background(51)
-    for (let i = 0; i < cells.length; i++) {
-        cells[i].show();
-    }
-    
-
-    current.visited = true;
-    current.highlight();
-
-    var next = current.checkNeighbors();
-
-    // check if current cell has unvisited neighbours.
-    if (next) {
-        next.visited = true; 
-        // push current cell to stack
-        stack.push(current);
-        // remove the walls between current and next
-        removeWalls(current,next);
-        // make the next cell the current cell
-        current = next;
-    }
-    else if (stack.length > 0) {
-        current = stack.pop();
+var move = function(dir) {
+    console.log(current);
+    if (current.walls[dir]) {
+        return;
     }
     else {
-        noLoop();
+        let i = current.i;
+        let j = current.j;
+        switch (dir) {
+            case 0:
+                if (current.j === 0) {
+                    return;
+                }
+                else {
+                    current = cells[index(i,j-1)];
+                }
+            break;
+            case 1:
+                if (current.i === cols-1) {
+                    return;
+                }
+                else {
+                    current = cells[index(i+1,j)];
+                }
+            break;
+            case 2:
+                if (current.j === rows-1) {
+                    return;
+                }
+                else {
+                    current = cells[index(i,j+1)];
+                }
+            break;
+            case 3:
+                if (current.i === 0) {
+                    return;
+                }
+                else {
+                    current = cells[index(i-1,j)];
+                }
+            break;
+        }
+    }
+}
+
+var draw = function() {
+    if (!g) {
+        background(51)
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].show();
+        }
+        
+
+        current.visited = true;
+        current.highlight();
+
+        var next = current.checkNeighbors();
+
+        // check if current cell has unvisited neighbours.
+        if (next) {
+            next.visited = true; 
+            // push current cell to stack
+            stack.push(current);
+            // remove the walls between current and next
+            removeWalls(current,next);
+            // make the next cell the current cell
+            current = next;
+        }
+        else if (stack.length > 0) {
+            current = stack.pop();
+        }
+        else {
+            g = true;
+        }
+    }
+    else {
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].show();
+        }
+        current.highlight();
     }
 }
 

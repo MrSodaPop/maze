@@ -9,6 +9,14 @@ var cell = function(i, j) {
     this.walls = [true,true,true,true]; //if wall top right bottom left
 
     this.show = function() {
+        if (this.i === current.i && this.j === current.j) {
+
+        }
+        else {
+            noStroke();
+            fill(51);
+            rect(i*w,j*w,w,w);
+        }
         stroke(255);
         if (this.walls[0]) {
             line(x,y,x+w,y);
