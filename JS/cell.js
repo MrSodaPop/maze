@@ -24,6 +24,12 @@ var cell = function(i, j) {
         }
     }
 
+    this.highlight = function() {
+        noStroke();
+        fill(255,0,255,100);
+        rect(i*w,j*w,w,w);
+    }
+
     this.checkNeighbors = function() {
         var neighbors = [];
 

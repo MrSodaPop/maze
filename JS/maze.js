@@ -1,4 +1,4 @@
-var w = 30;
+var w = 15;
 var cols, rows, current;
 var cells = [];
 var stack = [];
@@ -25,9 +25,10 @@ var draw = function() {
     for (let i = 0; i < cells.length; i++) {
         cells[i].show();
     }
+    
 
     current.visited = true;
-    //current.highlight();
+    current.highlight();
 
     var next = current.checkNeighbors();
 
@@ -43,6 +44,9 @@ var draw = function() {
     }
     else if (stack.length > 0) {
         current = stack.pop();
+    }
+    else {
+        noLoop();
     }
 }
 
