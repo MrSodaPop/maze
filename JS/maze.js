@@ -1,4 +1,4 @@
-var w = 30;
+var w = 20;
 var cols, rows, current;
 var cells = [];
 var stack = [];
